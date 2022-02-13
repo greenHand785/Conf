@@ -1,0 +1,1 @@
+CodeGenerator.exe ygy_test_mod.proto --output "YgyTest.cs"

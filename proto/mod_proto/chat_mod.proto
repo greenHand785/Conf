@@ -1,0 +1,73 @@
+package "Server.ygy.game.pb";
+
+message MSGID_CHAT
+{
+	optional	int32	MSGID_CHAT_SEND_REQUEST						= 0x00020011; // 发送消息请求
+	optional	int32	MSGID_CHAT_SEND_RESPONSE					= 0x00020012; // 发送消息回复
+	optional	int32 MSGID_CHAT_SEND_NOTIFY						= 0x00020010; // 发送消息通知
+	optional	int32	MSGID_CHAT_SEND_FRIEND_REQUEST		= 0x00020021; // 发送好友添加请求
+	optional	int32	MSGID_CHAT_SEND_FRIEND_RESPONSE		= 0x00020022; // 发送好友添加回复
+	optional	int32 MSGID_CHAT_SEND_FRIEND_NOTIFY			= 0x00020020; // 好友添加通知
+	optional	int32	MSGID_CHAT_FRIEND_DATA_REQUEST		= 0x00020031; // 好友列表请求
+	optional	int32	MSGID_CHAT_FRIEND_DATA_RESPONSE		= 0x00020032; // 好友列表回复
+}
+
+// 发送消息请求
+message PBMsgChatSendRequest
+{
+	optional	string receive_account		= 1; // 接受者账号
+	optional	string msg								= 2; // 消息
+	optional	string date								= 3; // 时间
+}
+
+// 发送消息回复
+message PBMsgChatSendResponse
+{
+	optional	int32 	return_code		= 1;
+}
+
+// 发送消息通知
+message PBMsgChatSendNotify
+{
+	optional	string	send_account	= 1; // 发送消息者
+	optional	string	msg						= 2; // 消息内容
+	optional	string	date					= 3; // 发送时间
+}
+
+// 发送好友请求
+message PBMsgChatSendFriendRequest
+{
+	optional	string	dir_account		= 1; // 接受者账号
+}
+
+// 好友请求回复
+message PBMsgChatSendFriendResponse
+{
+	optional	int32 	return_code		= 1;
+}
+
+// 添加好友通知
+message PBMsgChatSendFriendNotify
+{
+	optional	string	request_account	= 1;
+}
+
+// 好友列表请求
+message PBMsgChatFriendDataRequest
+{
+
+}
+
+// 好友列表回复
+message PBMsgChatFriendDataResponse
+{
+	optional	int32 									return_code		= 1;
+	optional 	PBMsgChatFriendDataList	friend_list				= 2;
+}
+
+// 好友列表信息
+message PBMsgChatFriendDataList
+{
+	repeated  string	friends				= 1;
+}
+

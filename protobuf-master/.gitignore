@@ -1,0 +1,9 @@
+bin/
+*.userprefs
+*~
+*.pidb
+*.suo
+obj/
+*.user
+packages/
+.vs/

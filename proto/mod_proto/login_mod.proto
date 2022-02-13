@@ -1,0 +1,51 @@
+package "Server.ygy.game.pb";
+
+message MSGID_LOGIN
+{
+	optional	int32	MSGID_LOGIN_REQUEST						= 0x00010011; // 登陆请求
+	optional	int32	MSGID_LOGIN_RESPONSE					= 0x00010012; // 登陆回复
+	optional	int32	MSGID_REGISTER_REQUEST				= 0x00010021; // 注册请求
+	optional	int32	MSGID_REGISTER_RESPONSE				= 0x00010022; // 注册回复
+	optional	int32 MSGID_AFFIRM_LOGIN_REQUEST		= 0x00010031; // 確認登陸請求
+	optional	int32 MSGID_AFFIRM_LOGIN_RESPONSE		= 0x00010032; // 確認登陸回復
+}
+
+// 登陆请求
+message PBMsgLoginRequest
+{
+	optional	string 	account 				= 1;
+	optional	string 	user_password 	= 2;
+}
+
+// 登陆回复
+message PBMsgLoginResponse
+{
+	optional	int32 	return_code = 1;
+
+}
+
+// 注册请求
+message PBMsgRegisterRequest
+{
+	optional	string		account					= 1;
+	optional	string		user_password 	= 2;
+}
+
+// 注册回复
+message PBMsgRegisterResponse
+{
+	optional	int32 	return_code = 1;
+
+}
+
+// 確認登陸請求
+message PBMsgAffirmLoginRequest
+{
+	optional	string 	account		= 1; // 账号
+}
+
+// 確認登陸回復
+message PBMsgAffirmLoginResponse
+{
+	optional	int32 	return_code		= 1;
+}

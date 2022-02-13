@@ -1,0 +1,7 @@
+package	"Server.ygy.game.pb";
+
+message Main_MSGID
+{
+	optional	int32	Main_MSGID_LOGIN			= 0x01; // 登陆注册功能
+	optional	int32	Main_MSGID_TALKING		= 0x02; // 聊天功能
+}

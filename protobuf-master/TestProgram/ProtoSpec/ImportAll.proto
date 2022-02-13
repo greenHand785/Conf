@@ -1,0 +1,6 @@
+
+import public "AddressBook.proto";
+import "google/protobuf/descriptor.proto";
+//This file is imported on another CodeGenerator call
+//import "LocalFeatures.proto";
+import "ProtoFeatures.proto";

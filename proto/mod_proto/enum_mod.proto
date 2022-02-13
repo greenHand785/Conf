@@ -1,0 +1,12 @@
+package	"Server.ygy.game.pb"; // 定义在那个包
+
+// 解释字段定义
+message	Descript
+{
+	optional	string		desc	= 1;// 描述字段
+}
+
+// 在这个文件中定义所有的枚举
+
+
+

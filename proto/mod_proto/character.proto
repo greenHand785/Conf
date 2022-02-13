@@ -1,0 +1,55 @@
+package  "server.ygy.game.db";
+
+// 玩家
+message DBCharacter
+{
+  optional  DBUserData    user_data       = 1; // 账号数据
+  optional  DBUserFriend  user_friend     = 2; // 好友
+  repeated  DBUserChatLog user_chat_log   = 3; // 聊天记录
+  repeated  DBGameData    game_data       = 4; // 对局记录
+}
+
+message DBUserData
+{
+  optional  DBUserCommonData    common_data  = 1; // 基本数据
+  optional  DBUserFightData     fight_data   = 2; // 战斗数据
+}
+
+message DBUserFightData
+{
+  optional  int32               kill_num        = 1; // 杀敌数
+  optional  int32               head_shot_num   = 2; // 爆头数
+  optional  int32               death_num       = 3; // 死亡数
+  optional  int64               harm_num        = 4; // 造成的伤害
+}
+
+message DBUserCommonData
+{
+  optional  string    account       = 1; // 账号
+  optional  string    password      = 2; // 密码
+  optional  string    phone_num     = 3; // 电话号
+  optional  string    email         = 4; // 邮箱号
+  optional  string    name          = 5; // 姓名
+}
+
+message DBUserFriend
+{
+  repeated  string    friends       = 1; // 好友账号列表
+}
+
+message DBUserChatLog
+{
+  optional  string  receive_account   = 1; // 接受者账号
+  optional  string  msg               = 2; // 消息内容:文字或图片路径
+  optional  string  date              = 3; // 发送时间
+}
+
+message DBGameData
+{
+  optional  string  start_date        = 1; // 开始时间
+  optional  string  end_date          = 2; // 结束时间
+  optional  int32   kill_num          = 3; // 杀敌数
+  optional  int32   head_shot_num     = 4; // 爆头数
+  optional  int32   death_num         = 5; // 死亡数
+  optional  int32   harm_num          = 6; // 伤害数值
+}
