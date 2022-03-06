@@ -8,5 +8,13 @@ message	Descript
 
 // 在这个文件中定义所有的枚举
 
+enum EWeaponType
+{
+		NONE 			= 0;
+		MAIN 			= 1;      	 // 主武器
+		SUB  			= 2;        // 副武器
+		KNIFE 		= 3;       // 近战武器
+		GRENADE 	= 4;    	// 手雷
+}
 
 

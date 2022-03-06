@@ -1,0 +1,18 @@
+package  "server.ygy.game.db";
+
+import "../mod_proto/enum_mod.proto";
+message WeaponConfig
+{
+  optional  int32   id            = 1;
+  optional  string  name          = 2; // 武器名称
+  optional  int32   block_count   = 3; // 弹夹数量
+  optional  int32   hurt_num      = 4; // 伤害值
+  optional  int32   block_bullet  = 5; // 单个弹夹子弹数
+  optional  string  prefab_path   = 6; // 预制体路径
+  optional  EWeaponType type      = 7;
+}
+
+message WeaponList
+{
+  repeated WeaponConfig   weapons   = 1; // 武器列表
+}

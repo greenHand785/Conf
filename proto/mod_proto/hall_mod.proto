@@ -1,0 +1,80 @@
+package "Server.ygy.game.pb";
+
+message MSGID_HALL
+{
+  optional  int32     MSGID_HALL_CHANGE_USER_IMG_REQUEST    = 0x00030011; // 请求更换头像
+  optional  int32     MSGID_HALL_CHANGE_USER_IMG_RESPONSE   = 0x00030012; // 更换头像回复
+  optional  int32     MSGID_HALL_USER_DATA_REQUEST          = 0x00030021; // 用户数据请求
+  optional  int32     MSGID_HALL_USER_DATA_RESPONSE         = 0x00030022; // 用户数据回复
+  optional  int32     MSGID_HALL_USER_GAME_RECORD_REQUEST   = 0x00030031; // 用户对局数据请求
+  optional  int32     MSGID_HALL_USER_GAME_RECORD_RESPONSE  = 0x00030032; // 用户对局数据回复
+
+}
+
+message PBMsgChangeUserImgRequest
+{
+  optional  string    new_user_img = 1; // 新的用户头像
+}
+
+message PBMsgChangeUserImgResponse
+{
+  optional  int32     return_code = 1; // 返回码
+}
+
+// 用户数据请求
+message PBMsgUserDataRequest
+{
+
+}
+
+// 用户数据回复
+message PBMsgUserDataResponse
+{
+  optional  int32             return_code     = 1;
+  optional  PBMsgUserData     user_data       = 2;
+}
+
+// 用户数据
+message PBMsgUserData
+{
+  optional  string              account         = 1; // 账号
+  optional  string              phone_num       = 2; // 电话号
+  optional  string              email           = 3; // 邮箱号
+  optional  string              name            = 4; // 姓名
+  optional  string              user_img        = 5; // 用户头像
+  optional  int32               kill_num        = 6; // 杀敌数
+  optional  int32               head_shot_num   = 7; // 爆头数
+  optional  int32               death_num       = 8; // 死亡数
+  optional  int64               harm_num        = 9; // 造成的伤害
+}
+
+// 用户对局数据请求
+message PBMsgUserGameRecordRequest
+{
+
+}
+
+// 用户对局数据回复
+message PBMsgUserGameRecordResponse
+{
+  optional  int32                   return_code   = 1;// 返回码
+  repeated  PBMsgGameRecordInfo     info          = 2;
+}
+
+message PBMsgGameRecordInfo
+{
+  optional  int32                 id                = 1; // 对局id
+  optional  int64                 start_date        = 2; // 开始时间
+  repeated  PBMsgGameData         info              = 3; // 对局结算信息
+}
+
+message PBMsgGameData
+{
+  optional  int64   end_date          = 1; // 死亡时间
+  optional  int32   kill_num          = 2; // 杀敌数
+  optional  int32   head_shot_num     = 3; // 爆头数
+  optional  int32   death_num         = 4; // 死亡数
+  optional  int32   harm_num          = 5; // 伤害数值
+  optional  int32   rank              = 6; // 排名
+  optional  string  name              = 7; // 名称
+}

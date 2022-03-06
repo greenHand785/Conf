@@ -2,45 +2,56 @@ package "Server.ygy.game.pb";
 
 message MSGID_CHAT
 {
-	optional	int32	MSGID_CHAT_SEND_REQUEST						= 0x00020011; // 发送消息请求
-	optional	int32	MSGID_CHAT_SEND_RESPONSE					= 0x00020012; // 发送消息回复
-	optional	int32 MSGID_CHAT_SEND_NOTIFY						= 0x00020010; // 发送消息通知
-	optional	int32	MSGID_CHAT_SEND_FRIEND_REQUEST		= 0x00020021; // 发送好友添加请求
-	optional	int32	MSGID_CHAT_SEND_FRIEND_RESPONSE		= 0x00020022; // 发送好友添加回复
-	optional	int32 MSGID_CHAT_SEND_FRIEND_NOTIFY			= 0x00020020; // 好友添加通知
-	optional	int32	MSGID_CHAT_FRIEND_DATA_REQUEST		= 0x00020031; // 好友列表请求
-	optional	int32	MSGID_CHAT_FRIEND_DATA_RESPONSE		= 0x00020032; // 好友列表回复
+	optional	int32	MSGID_CHAT_SEND_REQUEST								= 0x00020011; // 发送消息请求
+	optional	int32	MSGID_CHAT_SEND_RESPONSE							= 0x00020012; // 发送消息回复
+	optional	int32 MSGID_CHAT_SEND_NOTIFY								= 0x00020010; // 发送消息通知
+	optional	int32	MSGID_CHAT_SEND_FRIEND_REQUEST				= 0x00020021; // 发送好友添加请求
+	optional	int32	MSGID_CHAT_SEND_FRIEND_RESPONSE				= 0x00020022; // 发送好友添加回复
+	optional	int32 MSGID_CHAT_SEND_FRIEND_NOTIFY					= 0x00020020; // 好友添加通知
+	optional	int32	MSGID_CHAT_FRIEND_DATA_REQUEST				= 0x00020031; // 好友列表请求
+	optional	int32	MSGID_CHAT_FRIEND_DATA_RESPONSE				= 0x00020032; // 好友列表回复
+	optional	int32 MSGID_CHAT_FRIEND_MSG_LOG_REQUEST 		= 0x00020041; // 好友消息记录列表请求
+	optional	int32 MSGID_CHAT_FRIEND_MSG_LOG_RESPONSE 		= 0x00020042; // 好友消息记录列表回复
+	optional	int32 MSGID_CHAT_SELF_MSG_LOG_REQUEST				= 0x00020051; // 玩家发送给好友的聊天记录请求
+	optional	int32 MSGID_CHAT_SELF_MSG_LOG_RESPONSE			= 0x00020052; // 玩家发送给好友的聊天记录回复
+	optional	int32 MSGID_CHAT_USER_DATA_REQUEST					= 0x00020061; // 用户数据查询请求
+	optional	int32 MSGID_CHAT_USER_DATA_RESPONSE					= 0x00020062; // 用户数据查询回复
+	optional	int32 MSGID_CHAT_ANSWER_ADD_FRIEND_REQUEST	= 0x00020071; // 回应他人的添加好友请求
+	optional	int32 MSGID_CHAT_ANSWER_ADD_FRIEND_RESPONSE	= 0x00020072; // 回应他人的添加好友回复
+	optional	int32 MSGID_CHAT_ANSWER_ADD_FRIEND_NOTIFY		= 0x00020070; // 回应他人的添加好友通知
+
 }
 
 // 发送消息请求
 message PBMsgChatSendRequest
 {
-	optional	string receive_account		= 1; // 接受者账号
-	optional	string msg								= 2; // 消息
-	optional	string date								= 3; // 时间
+	optional	string 	receive_account			= 1; // 接受者账号
+	optional	string 	msg									= 2; // 消息
+	optional	int64 	date								= 3; // 时间
 }
 
 // 发送消息回复
 message PBMsgChatSendResponse
 {
-	optional	int32 	return_code		= 1;
+	optional	int32 					return_code		= 1;
 }
 
 // 发送消息通知
 message PBMsgChatSendNotify
 {
-	optional	string	send_account	= 1; // 发送消息者
-	optional	string	msg						= 2; // 消息内容
-	optional	string	date					= 3; // 发送时间
+	optional	string	send_account			= 1; // 发送消息者
+	optional	string	msg								= 2; // 消息内容
+	optional	int64		date							= 3; // 发送时间
+	optional	string	receive_account		=4; // 接受者
 }
 
-// 发送好友请求
+// 发送添加好友请求
 message PBMsgChatSendFriendRequest
 {
 	optional	string	dir_account		= 1; // 接受者账号
 }
 
-// 好友请求回复
+// 添加好友请求回复
 message PBMsgChatSendFriendResponse
 {
 	optional	int32 	return_code		= 1;
@@ -49,25 +60,97 @@ message PBMsgChatSendFriendResponse
 // 添加好友通知
 message PBMsgChatSendFriendNotify
 {
-	optional	string	request_account	= 1;
+	optional	string	request_account	= 1; // 发送者账号
+	optional	string	request_name		= 2;// 发送者名称
 }
 
 // 好友列表请求
-message PBMsgChatFriendDataRequest
+message PBMsgUserFriendListRequest
 {
 
 }
 
 // 好友列表回复
-message PBMsgChatFriendDataResponse
+message PBMsgUserFriendListResponse
 {
-	optional	int32 									return_code		= 1;
-	optional 	PBMsgChatFriendDataList	friend_list				= 2;
+	optional  int32             return_code   = 1;
+	repeated  PBMsgFriendInfo   friends       = 2;
 }
 
-// 好友列表信息
-message PBMsgChatFriendDataList
+message PBMsgFriendInfo
 {
-	repeated  string	friends				= 1;
+	optional  string    account   = 1;
+	optional  string    name      = 2;
+	optional  string    user_img  = 3;
 }
 
+// 好友聊天记录请求
+message PBMsgFriendChatMsgLogRequest
+{
+
+}
+
+// 好友聊天记录回复
+message PBMsgFriendChatMsgLogResponse
+{
+	optional	int32 								return_code		= 1; // 返回码
+	repeated 	PBMsgFriendChatMsg		msgs					= 2; // 聊天记录列表
+}
+
+message PBMsgFriendChatMsg
+{
+	optional	string								account			=	1;
+	repeated	PBMsgChatMsg					chat_msgs		= 2;
+}
+
+// 聊天记录
+message PBMsgChatMsg
+{
+	optional	string	msg						= 1; // 消息内容
+	optional	int64		date					= 2; // 发送时间
+}
+
+// 玩家自身发送的聊天记录请求
+message PBMsgSelfSendChatMsgLogRequest
+{
+
+}
+
+// 玩家自身发送的聊天记录回复
+message PBMsgSelfSendChatMsgLogResponse
+{
+	optional	int32 								return_code		= 1;//返回码
+	repeated 	PBMsgFriendChatMsg		msgs					= 2; // 聊天记录列表
+}
+
+// 查询用户数据请求
+message PBMsgSelectUserDataRequest
+{
+	optional	string			account		= 1; // 关键词，账号，或者用户名
+	optional	string			name			= 2;
+}
+
+// 查询用户数据回复
+message PBMsgSelectUserDataResponse
+{
+	optional  int32             return_code   = 1;
+	repeated  PBMsgFriendInfo   users      		= 2;
+}
+
+// 回复他人的添加好友请求
+message PBMsgAnswerAddFriendRequest
+{
+	optional	string			answer_account		= 1; // 好友请求者账号
+	optional	bool 				result						= 2; // 结果
+}
+// 回应他人的添加好友回复
+message PBMsgAnswerAddFriendResponse
+{
+	optional	int32 						return_code		= 1;
+	optional	PBMsgFriendInfo		friend_info		= 2; // 添加的好友信息
+}
+// 回应他人的添加好友回复 , 服务器发送给 发起好友请求的用户
+message PBMsgAnswerAddFriendNotify
+{
+	optional	PBMsgFriendInfo		add_friend_info	= 1; // 添加的好友信息
+}

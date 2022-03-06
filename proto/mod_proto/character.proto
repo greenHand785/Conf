@@ -3,10 +3,10 @@ package  "server.ygy.game.db";
 // 玩家
 message DBCharacter
 {
-  optional  DBUserData    user_data       = 1; // 账号数据
-  optional  DBUserFriend  user_friend     = 2; // 好友
-  repeated  DBUserChatLog user_chat_log   = 3; // 聊天记录
-  repeated  DBGameData    game_data       = 4; // 对局记录
+  optional  DBUserData          user_data       = 1; // 账号数据
+  optional  DBUserFriend        user_friend     = 2; // 好友
+  repeated  DBUserChatLog       user_chat_log   = 3; // 聊天记录
+  repeated  DBGameRecordData    game_data       = 4; // 对局记录
 }
 
 message DBUserData
@@ -30,6 +30,7 @@ message DBUserCommonData
   optional  string    phone_num     = 3; // 电话号
   optional  string    email         = 4; // 邮箱号
   optional  string    name          = 5; // 姓名
+  optional  string    user_img      = 6; // 用户头像
 }
 
 message DBUserFriend
@@ -46,10 +47,18 @@ message DBUserChatLog
 
 message DBGameData
 {
-  optional  string  start_date        = 1; // 开始时间
-  optional  string  end_date          = 2; // 结束时间
-  optional  int32   kill_num          = 3; // 杀敌数
-  optional  int32   head_shot_num     = 4; // 爆头数
-  optional  int32   death_num         = 5; // 死亡数
-  optional  int32   harm_num          = 6; // 伤害数值
+  optional  int64   end_date          = 1; // 死亡时间
+  optional  int32   kill_num          = 2; // 杀敌数
+  optional  int32   head_shot_num     = 3; // 爆头数
+  optional  int32   death_num         = 4; // 死亡数
+  optional  int32   harm_num          = 5; // 伤害数值
+  optional  int32   rank              = 6; // 排名
+  optional  string  name              = 7; // 名称
+}
+
+message DBGameRecordData
+{
+  optional  int32             id                = 1; // 对局id
+  optional  int64             start_date        = 2; // 开始时间
+  repeated  DBGameData        info              = 3; // 对局结算信息
 }
