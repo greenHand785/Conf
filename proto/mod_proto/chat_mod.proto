@@ -10,7 +10,7 @@ message MSGID_CHAT
 	optional	int32 MSGID_CHAT_SEND_FRIEND_NOTIFY					= 0x00020020; // 好友添加通知
 	optional	int32	MSGID_CHAT_FRIEND_DATA_REQUEST				= 0x00020031; // 好友列表请求
 	optional	int32	MSGID_CHAT_FRIEND_DATA_RESPONSE				= 0x00020032; // 好友列表回复
-	optional	int32 MSGID_CHAT_FRIEND_MSG_LOG_REQUEST 		= 0x00020041; // 好友消息记录列表请求
+	optional	int32 MSGID_CHAT_FRIEND_MSG_LOG_REQUEST 		= 0x00020041; // 好友消息记录列表请求.
 	optional	int32 MSGID_CHAT_FRIEND_MSG_LOG_RESPONSE 		= 0x00020042; // 好友消息记录列表回复
 	optional	int32 MSGID_CHAT_SELF_MSG_LOG_REQUEST				= 0x00020051; // 玩家发送给好友的聊天记录请求
 	optional	int32 MSGID_CHAT_SELF_MSG_LOG_RESPONSE			= 0x00020052; // 玩家发送给好友的聊天记录回复
@@ -19,7 +19,6 @@ message MSGID_CHAT
 	optional	int32 MSGID_CHAT_ANSWER_ADD_FRIEND_REQUEST	= 0x00020071; // 回应他人的添加好友请求
 	optional	int32 MSGID_CHAT_ANSWER_ADD_FRIEND_RESPONSE	= 0x00020072; // 回应他人的添加好友回复
 	optional	int32 MSGID_CHAT_ANSWER_ADD_FRIEND_NOTIFY		= 0x00020070; // 回应他人的添加好友通知
-
 }
 
 // 发送消息请求
@@ -154,3 +153,4 @@ message PBMsgAnswerAddFriendNotify
 {
 	optional	PBMsgFriendInfo		add_friend_info	= 1; // 添加的好友信息
 }
+

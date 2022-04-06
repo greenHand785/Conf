@@ -3,10 +3,11 @@ package  "server.ygy.game.db";
 // 玩家
 message DBCharacter
 {
-  optional  DBUserData          user_data       = 1; // 账号数据
-  optional  DBUserFriend        user_friend     = 2; // 好友
-  repeated  DBUserChatLog       user_chat_log   = 3; // 聊天记录
-  repeated  DBGameRecordData    game_data       = 4; // 对局记录
+  optional  DBUserData          user_data               = 1; // 账号数据
+  optional  DBUserFriend        user_friend             = 2; // 好友
+  repeated  DBUserChatLog       user_send_chat_log      = 3; // 发送聊天记录
+  repeated  DBUserChatLog       user_receive_chat_log   = 4; // 接受聊天记录
+  repeated  DBGameRecordData    game_data               = 5; // 对局记录
 }
 
 message DBUserData
@@ -35,14 +36,22 @@ message DBUserCommonData
 
 message DBUserFriend
 {
-  repeated  string    friends       = 1; // 好友账号列表
+  repeated  DBFriendInfo    friends       = 1; // 好友账号列表
+}
+
+message DBFriendInfo
+{
+  optional  string    account   = 1;
+  optional  string    name      = 2;
+  optional  string    user_img  = 3;
 }
 
 message DBUserChatLog
 {
-  optional  string  receive_account   = 1; // 接受者账号
-  optional  string  msg               = 2; // 消息内容:文字或图片路径
-  optional  string  date              = 3; // 发送时间
+  optional  string  send_account      = 1; // 接受者账号
+  optional  string  receive_account   = 2; // 接受者账号
+  optional  string  msg               = 3; // 消息内容:文字或图片路径
+  optional  int64   date              = 4; // 发送时间
 }
 
 message DBGameData
@@ -54,11 +63,12 @@ message DBGameData
   optional  int32   harm_num          = 5; // 伤害数值
   optional  int32   rank              = 6; // 排名
   optional  string  name              = 7; // 名称
+  optional  string  account           = 8; // 账号
 }
 
 message DBGameRecordData
 {
-  optional  int32             id                = 1; // 对局id
+  optional  int64             id                = 1; // 对局id
   optional  int64             start_date        = 2; // 开始时间
   repeated  DBGameData        info              = 3; // 对局结算信息
 }

@@ -1,5 +1,31 @@
 package "Server.ygy.game.pb";
 
+// 操作类型
+enum EOptionType
+{
+  EOptionType_NONE			  = 0;
+  EOptionType_Axis        = 1;
+  EOptionType_ButtonDown  = 2;
+  EOptionType_KeyDown     = 3;
+}
+
+// 操作具体类型
+enum EOptionTypeReal
+{
+  EOptionTypeReal_None              = 0;
+  EOptionTypeReal_Shoot             = 1; // 射击
+  EOptionTypeReal_ForwardOrBack     = 2; // 前进后退
+  EOptionTypeReal_RightOrLeft       = 3; // 向左向右
+  EOptionTypeReal_Jump              = 4; // 跳跃
+  EOptionTypeReal_Reload            = 5; // 换弹
+  EOptionTypeReal_OpenMirror        = 6; // 开镜
+  EOptionTypeReal_ChangeMainWeapon  = 7; // 切换主武器
+  EOptionTypeReal_ChangeSubWeapon   = 8; // 切换副武器
+  EOptionTypeReal_ChangeLastWeapon  = 9; // 切换上一个武器
+  EOptionTypeReal_MouseX            = 10; // 横向移动鼠标
+  EOptionTypeReal_MouseY            = 11; // 纵向移动鼠标
+}
+
 message MSGID_HALL
 {
   optional  int32     MSGID_HALL_CHANGE_USER_IMG_REQUEST    = 0x00030011; // 请求更换头像
@@ -8,6 +34,30 @@ message MSGID_HALL
   optional  int32     MSGID_HALL_USER_DATA_RESPONSE         = 0x00030022; // 用户数据回复
   optional  int32     MSGID_HALL_USER_GAME_RECORD_REQUEST   = 0x00030031; // 用户对局数据请求
   optional  int32     MSGID_HALL_USER_GAME_RECORD_RESPONSE  = 0x00030032; // 用户对局数据回复
+  optional	int32     MSGID_HALL_GET_ALL_RANK_LIST_REQUEST	= 0x00030041; // 请求获得全网排位排名
+  optional	int32     MSGID_HALL_GET_ALL_RANK_LIST_RESPONSE	= 0x00030042; // 回复获得全网排位排名
+  optional  int32     MSGID_HALL_GET_ALL_RANK_LIST_NOTIFY	  = 0x00030040; // 通知获得全网排位排名
+  optional  int32     MSGID_HALL_START_MATCHING_REQUEST     = 0x00030051; // 开始匹配请求
+  optional  int32     MSGID_HALL_START_MATCHING_RESPONSE    = 0x00030052; // 开始匹配回复
+  optional  int32     MSGID_HALL_START_MATCHING_NOTIFY      = 0x00030050; // 开始匹配通知
+  optional  int32     MSGID_HALL_CANCEL_MATCHING_REQUEST    = 0x00030061; // 取消匹配请求
+  optional  int32     MSGID_HALL_CANCEL_MATCHING_RESPONSE   = 0x00030062; // 取消匹配回复
+  optional  int32     MSGID_HALL_CHANGE_USER_NAME_REQUEST   = 0x00030071; // 请求修改用户名称
+  optional  int32     MSGID_HALL_CHANGE_USER_NAME_RESPONSE  = 0x00030072; // 修改用户名称回复
+  optional  int32     MSGID_HALL_GAME_START_REQUEST         = 0x00030081; // 开始游戏请求
+  optional  int32     MSGID_HALL_GAME_START_RESPONSE        = 0x00030082; // 开始游戏回复
+  optional  int32     MSGID_HALL_GAME_START_NOTIFY          = 0x00030080; // 开始游戏通知
+  optional  int32     MSGID_HALL_GAME_RUNNING_NOTIFY        = 0x00030090; // 对局运行中通知
+  optional  int32     MSGID_HALL_GAME_RUNNING_REQUEST       = 0x00030091; // 请求转发对局操作
+  optional  int32     MSGID_HALL_GAME_RUNNING_RESPONSE      = 0x00030092; // 转发对局操作回复
+  optional  int32     MSGID_HALL_EXIT_GAME_REQUEST          = 0x000300A1; // 退出游戏请求
+  optional  int32     MSGID_HALL_EXIT_GAME_RESPONSE         = 0x000300A2; // 退出游戏回复
+  optional  int32     MSGID_HALL_CHOSE_PACKAGE_REQUEST      = 0x000300B1; // 选择背包请求
+  optional  int32     MSGID_HALL_CHOSE_PACKAGE_RESPONSE     = 0x000300B2; // 选择背包回复
+  optional  int32     MSGID_HALL_CHOSE_SKILL_REQUEST        = 0x000300C1; // 选择技能请求
+  optional  int32     MSGID_HALL_CHOSE_SKILL_RESPONSE       = 0x000300C2; // 选择技能回复
+  optional  int32     MSGID_HALL_ROOM_HOST_IP_NOTIFY        = 0x000300D0; // 房主地址通知
+  optional  int32     MSGID_HALL_HOST_CONNECTED_REPORT     = 0x000300D3; // 连接房主结果上报
 
 }
 
@@ -18,7 +68,8 @@ message PBMsgChangeUserImgRequest
 
 message PBMsgChangeUserImgResponse
 {
-  optional  int32     return_code = 1; // 返回码
+  optional  int32     return_code   = 1;  // 返回码
+  optional  string    new_user_img  = 2; // 新的头像
 }
 
 // 用户数据请求
@@ -63,7 +114,7 @@ message PBMsgUserGameRecordResponse
 
 message PBMsgGameRecordInfo
 {
-  optional  int32                 id                = 1; // 对局id
+  optional  int64                 id                = 1; // 对局id
   optional  int64                 start_date        = 2; // 开始时间
   repeated  PBMsgGameData         info              = 3; // 对局结算信息
 }
@@ -77,4 +128,205 @@ message PBMsgGameData
   optional  int32   harm_num          = 5; // 伤害数值
   optional  int32   rank              = 6; // 排名
   optional  string  name              = 7; // 名称
+  optional  string  account           = 8; // 账号
+}
+
+// 请求获得全网排名前十列表
+message PBMsgGetAllRankRequest
+{
+
+}
+// 回复获得全网排名前十列表
+message PBMsgGetAllRankResponse
+{
+  optional	int32 			      return_code		= 1; // 返回码
+  repeated  PBMsgGameData     info          = 2; // 查询列表
+}
+
+// 通知全网排名前十列表
+message PBMsgGetAllRankNotify
+{
+  repeated  PBMsgGameData     info          = 1; // 查询列表
+}
+
+
+// 开始匹配请求
+message PBMsgStartMatchingRequest
+{
+  optional  string    account   = 1; // 发起匹配请求的用户账号
+}
+
+// 开始匹配回复
+message PBMsgStartMatchingResponse
+{
+  optional  int32     return_code         = 1;// 返回码
+  optional  int32     room_player_count   = 2; // 当前加入房间人数
+  optional  int64     room_id             = 3;// 加入的房间id
+}
+
+// 开始匹配通知
+message PBMsgStartMatchingNotify
+{
+  optional  bool      is_open                       = 1; // 是否开始游戏
+  optional  int32     leave_time                    = 2; // 倒计时
+  optional  int32     room_player_count             = 3; // 玩家个数
+}
+
+// 取消匹配请求
+message PBMsgCancelMatchingRequest
+{
+  optional  string    account   = 1;// 取消匹配的用户账号
+  optional  int64     room_id   = 2; // 房间id
+}
+
+// 取消匹配回复
+message PBMsgCancelMatchingResponse
+{
+  optional  int32      return_code    = 1;// 返回码
+}
+
+// 修改用户名称请求
+message PBMsgChangeUserNameRequest
+{
+  optional    string      account     = 1; // 账号
+  optional    string      name        = 2; // 新名称
+}
+
+// 修改用户名称回复
+message PBMsgChangeUserNameResponse
+{
+  optional    int32     return_code   = 1;
+  optional    string    name          = 2; // 修改后的名称
+}
+
+// 开始游戏请求
+message PBMsgStartGameRequest
+{
+  optional    string      account       = 1; // 客户端账号
+  optional    int64       room_id       = 2; // 房间id
+}
+
+// 开始游戏回复
+message PBMsgStartGameResponse
+{
+  optional    int32             return_code         = 1; // 返回码
+}
+
+// 玩家基本信息
+message PBMsgPlayerInfo
+{
+  optional    string    account       = 1;
+  optional    int32     package_id    = 2;
+  optional    int32     skill_id      = 3;
+  optional    string    name          = 4;
+}
+
+// 开始游戏通知
+message PBMsgStartGameNotify
+{
+  optional    int64             init_frame_count          = 1; // 初始帧数
+  optional    int32             flush_time                = 2; // 服务端刷新频率
+  repeated    PBMsgPlayerInfo   players                   = 3; // 所有玩家信息
+}
+
+// 对局运行中通知
+message PBMsgGameRunningNotify
+{
+  optional    int64                 current_frame_count   = 1; // 当前服务端帧数
+  repeated    PBMsgPlayerOption     options               = 2; // 操作列表
+  optional    int32                 flush_time            = 3; // 服务端刷新频率
+}
+
+// 对局运行中请求(客户端向服务器请求转发操作)
+message PBMsgGameRunningRequest
+{
+  optional    int64                 room_id = 1;
+  optional    PBMsgPlayerOption     option  = 2; // 玩家操作
+}
+
+// 玩家操作
+message PBMsgPlayerOption
+{
+  optional    string                account          = 1; // 玩家账号
+  repeated    PBMsgOption           player_option    = 2; // 玩家操作
+  optional    int64                 frame_count      = 3; // 服务端帧数
+}
+
+// 操作
+message PBMsgOption
+{
+  optional    EOptionType           option_type                   = 1 [default = EOptionType_NONE]; // 操作类型
+  optional    EOptionTypeReal       input_type                    = 2 [default = EOptionTypeReal_None]; // 操作具体字符
+  optional    bool                  value_bool                    = 3; // 按键值
+  optional    float                 value_float                   = 4; // 操作值
+  optional    int64                 client_frame_count            = 5; // 当前客户端帧数
+}
+
+// 对局运行中回复
+message PBMsgGameRunningResponse
+{
+  optional  int32                 return_code           = 1; // 返回码
+}
+
+// 退出游戏请求
+message PBMsgExitGameRequest
+{
+  optional  int64           room_id       = 1; // 房间id
+  optional  PBMsgGameData   game_data     = 2; // 游戏数据
+}
+
+// 退出游戏回复
+message PBMsgExitGameResponse
+{
+  optional  int32       return_code     = 1; // 返回码
+}
+
+// 选择背包请求
+message PBMsgChosePackageRequest
+{
+  optional  int64     room_id     = 1; // 房间id
+  optional  string    account     = 2; // 账号
+  optional  int32     package_id  = 3; // 背包id
+}
+
+// 选择背包回复
+message PBMsgChosePackageResponse
+{
+  optional  int32     return_code   = 1; // 返回码
+  optional  string    account       = 2;
+  optional  int32     package_id    = 3;
+}
+
+// 选择技能请求   TODO 待完成
+message PBMsgChoseSkillRequest
+{
+  optional  int64     room_id     = 1; // 房间id
+  optional  string    account     = 2; // 账号
+  optional  int32     skill_id    = 3; // 技能id
+}
+
+// 选择技能回复
+message PBMsgChoseSkillResponse
+{
+  optional  int32     return_code     = 1; // 返回码
+  optional  string    account         = 2;
+  optional  int32     skill_id        = 3;
+}
+
+// 采用Mirror进行游戏状态同步
+
+// 房主ip地址通知
+message PBMsgRoomHostIPAddressNotify
+{
+  optional  string            ip_address            = 1; // 房主地址
+  optional  string            host_account          = 2; // 房主账号
+  repeated  PBMsgPlayerInfo   players               = 3; // 所有玩家信息
+}
+
+// 连接房主结果上报
+message PBMsgHostConnectedReport
+{
+  optional  bool    is_connected    = 1; // 是否连接成功
+  optional  string  account         = 2;
+  optional  int64   room_id         = 3; // 房间id
 }

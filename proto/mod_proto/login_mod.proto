@@ -21,7 +21,8 @@ message PBMsgLoginRequest
 message PBMsgLoginResponse
 {
 	optional	int32 	return_code = 1;
-
+	optional	string 	account			= 2;
+	optional	string	psw					= 3;
 }
 
 // 注册请求
